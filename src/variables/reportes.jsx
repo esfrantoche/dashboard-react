@@ -1,103 +1,29 @@
 // ##############################
-// // // general variables for charts
+// // // general variables for reports
 // #############################
+let timeTPTS = ["00:08:04", "00:04:00", "00:31:05", "00:14:28", "00:10:01", "00:04:00", "00:31:04", "00:14:28", "00:08:07", "00:04:00", "00:31:05"];
+let timeTPTSSeconds = timeTPTS.map(function(x) {
+  let secondsVal = parseInt(x.substring(6,8));
+  let minutesVal = parseInt(x.substring(3,5)) * 60;
+  let hoursVal = parseInt(x.substring(0,2)) * 60 * 60;
+  return secondsVal + minutesVal + hoursVal;
+});
 
-const chartColor = "#FFFFFF";
+let timetpa = ["00:04:02", "00:02:00", "00:15:32", "00:07:14", "00:04:02", "00:02:00", "00:15:32", "00:07:14", "00:04:02", "00:02:00", "00:15:32"];
+let timetpaSeconds = timetpa.map(function(x) {
+  let secondsVal = parseInt(x.substring(6,8));
+  let minutesVal = parseInt(x.substring(3,5)) * 60;
+  let hoursVal = parseInt(x.substring(0,2)) * 60 * 60;
+  return secondsVal + minutesVal + hoursVal;
+});
 
-// General configuration for the charts with Line gradientStroke
-const gradientChartOptionsConfiguration = {
-  maintainAspectRatio: false,
-  legend: {
-    display: false
-  },
-  tooltips: {
-    bodySpacing: 4,
-    mode: "nearest",
-    intersect: 0,
-    position: "nearest",
-    xPadding: 10,
-    yPadding: 10,
-    caretPadding: 10
-  },
-  responsive: 1,
-  scales: {
-    yAxes: [
-      {
-        display: 0,
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          zeroLineColor: "transparent",
-          drawTicks: false,
-          display: false,
-          drawBorder: false
-        }
-      }
-    ],
-    xAxes: [
-      {
-        display: 0,
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          zeroLineColor: "transparent",
-          drawTicks: false,
-          display: false,
-          drawBorder: false
-        }
-      }
-    ]
-  },
-  layout: {
-    padding: { left: 0, right: 0, top: 15, bottom: 15 }
-  }
-};
-
-var gradientChartOptionsConfigurationWithNumbersAndGrid = {
-  maintainAspectRatio: false,
-  legend: {
-    display: false
-  },
-  tooltips: {
-    bodySpacing: 4,
-    mode: "nearest",
-    intersect: 0,
-    position: "nearest",
-    xPadding: 10,
-    yPadding: 10,
-    caretPadding: 10
-  },
-  responsive: 1,
-  scales: {
-    yAxes: [
-      {
-        gridLines: {
-          zeroLineColor: "transparent",
-          drawBorder: false
-        }
-      }
-    ],
-    xAxes: [
-      {
-        display: 0,
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          zeroLineColor: "transparent",
-          drawTicks: false,
-          display: false,
-          drawBorder: false
-        }
-      }
-    ]
-  },
-  layout: {
-    padding: { left: 0, right: 0, top: 15, bottom: 15 }
-  }
-};
+let timetpc = ["00:04:02", "00:02:00", "00:15:32", "00:07:14", "00:04:02", "00:02:00", "00:15:32", "00:07:14", "00:04:02", "00:02:00", "00:15:32"];
+let timetpcSeconds = timetpc.map(function(x) {
+  let secondsVal = parseInt(x.substring(6,8));
+  let minutesVal = parseInt(x.substring(3,5)) * 60;
+  let hoursVal = parseInt(x.substring(0,2)) * 60 * 60;
+  return (secondsVal + minutesVal + hoursVal)*2;
+});
 
 const chartsPrincipal1 = {
   data :  {
@@ -106,7 +32,7 @@ const chartsPrincipal1 = {
       label: 'Tiempo promedio total en suc.',
       type:'line',
       lineTension: 0.1,
-      data: [8, 3, 31, 14, 10, 4, 30, 14, 8, 4, 31],
+      data: timeTPTSSeconds,
       fill: false,
       borderColor: '#8064a2',
       backgroundColor: '#8064a2',
@@ -118,7 +44,7 @@ const chartsPrincipal1 = {
     },{
       type: 'bar',
       label: 'Tiempo Promedio en Cola',
-      data: [3, 2, 15, 7, 4, 2, 15, 7, 4, 2, 15],
+      data: timetpaSeconds,
       fill: true,
       backgroundColor: '#f79646',
       borderColor: '#f79646',
@@ -128,7 +54,7 @@ const chartsPrincipal1 = {
     },{
       type: 'bar',
       label: 'Tiempo Promedio de atencion',
-      data: [8, 3, 31, 14, 10, 4, 30, 14, 8, 4, 31],
+      data: timetpcSeconds,
       fill: true,
       backgroundColor: '#4bacc6',
       borderColor: '#4bacc6',
@@ -163,7 +89,7 @@ const chartsPrincipal1 = {
             }
           }],
         yAxes: [{
-          type: 'linear',
+          type: 'time',
           display: true,
           position: 'left',
           id: 'y-axis-1',
@@ -207,6 +133,50 @@ const chartsPrincipal1 = {
       }
     }]
 };
+
+/*const chartsPrincipal1 = {
+  type: 'line',
+  data: {
+    labels: ['Aguilares', 'Ahuachapan', 'Alameda Roosevelt', 'Apopa', 'Bernal', 'Calavarena', 'Centroamerica', 'Chalatenango', 'Ciudad Barrios', 'Cojutepeque', 'Diagonal Universitaria'],
+    datasets: [{
+      label: 'Tiempo promedio total en suc.',
+      type:'line',
+      lineTension: 0.1,
+      fill: false,
+      data: timeTPTS,
+      borderColor: '#8064a2',
+      backgroundColor: '#8064a2',
+      pointBorderColor: '#8064a2',
+      pointBackgroundColor: '#8064a2',
+      pointHoverBackgroundColor: '#8064a2',
+      pointHoverBorderColor: '#8064a2'
+    }]
+  },
+  options: {
+    scales: {
+      xAxes: [{
+        display: true,
+        stacked: true,
+        gridLines: {
+          display: true
+        }
+      }],
+      yAxes: [{
+        type: 'time',
+        time: {
+          parser: 'hh:mm:ss',
+          unit: 'seconds',
+          unitStepSize: 100,
+          min: '00:10:00',
+          max: '00:10:00',
+          displayFormats: {
+            'seconds': 'hh:mm:ss'
+          }
+        }
+      }]
+    }
+  }
+};*/
 
 const chartsPrincipal2 = {
   data :  {

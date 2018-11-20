@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import ReactTable from "react-table";
 import { Card, CardBody, CardHeader, CardTitle, CardFooter, Col, Row, Table } from "reactstrap";
 import { Bar } from "react-chartjs-2";
-import Moment from 'react-moment';
+//import Moment from 'react-moment';
 
 import { PanelHeader, CardCategory } from "components";
 
@@ -121,7 +121,7 @@ class Secundario extends Component {
                   </thead>
                   <tbody>
                     {dataTableSummary.map((prop, key) => {
-                      if (key==0 || key == 3)
+                      if (key===0 || key === 3)
                         return [
                           <tr>
                             <th rowspan={3}>{prop[0]}</th>

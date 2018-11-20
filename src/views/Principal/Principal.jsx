@@ -65,7 +65,7 @@ class Principal extends Component {
         />
         <div className="content">
           <Row>
-            <Col xs={12} md={6} className="ml-auto">
+            <Col xs={12} md={12} className="ml-auto">
               <Card className="card-chart">
                 <CardHeader>
                   <CardCategory>Tiempos de caja en sucursales no BMATIC</CardCategory>
@@ -82,7 +82,7 @@ class Principal extends Component {
               <Card className="card-chart">
               </Card>
             </Col>
-            <Col xs={12} md={6} className="ml-auto">
+            <Col xs={12} md={12} className="ml-auto">
               <Card className="card-chart">
                 <CardHeader>
                   <CardCategory>Tiempos en sucursales no BMATIC</CardCategory>

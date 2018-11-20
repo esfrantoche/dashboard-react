@@ -1,6 +1,5 @@
 import Principal from "views/Principal/Principal.jsx";
-
-import pagesRoutes from "./pages.jsx";
+import Secundario from "views/Principal/Secundario.jsx";
 
 var repRoutes = [
   {
@@ -20,7 +19,7 @@ var repRoutes = [
         path: "/reportes/secundario",
         name: "Secundario",
         mini: "SD",
-        component: Principal
+        component: Secundario
       }
     ]
   },
