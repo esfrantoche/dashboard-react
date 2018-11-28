@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 // react component for creating dynamic tables
 import ReactTable from "react-table";
-import { Card, CardBody, CardHeader, CardTitle, CardFooter, Col, Row, Table } from "reactstrap";
+import { Card, CardBody, CardHeader, CardTitle, CardFooter, Col, Container, FormGroup, Navbar, Row, Table } from "reactstrap";
 import { Bar } from "react-chartjs-2";
+import Select from "react-select";
+import Datetime from "react-datetime";
 //import Moment from 'react-moment';
 
 import { PanelHeader, CardCategory } from "components";
@@ -11,19 +13,97 @@ import {
   chartsPrincipal3
 } from "variables/reportes";
 
-const dataTable = [
-  ["Cojutepeque", "25-Jun", "8:35", "Persona Natural", "00:16:18", "0", "colecturia en linea", "00:05:56", "c", "0:00:00", "00:00:00", "0:22:14", "8:57", "5", "6", "Pago cheque"],
-  ["Cojutepeque", "25-Jun", "8:16", "Persona Natural", "00:16:36", "0", "retiro ahorro ", "00:02:13", "c", "0:00:00", "00:00:00", "0:18:49", "8:34", "6", "4", ""],
-  ["Cojutepeque", "25-Jun", "8:37", "Persona Natural", "00:20:04", "0", "retiro ahorro", "00:02:17", "c", "0:00:00", "00:00:00", "0:22:21", "8:59", "7", "4", ""],
-  ["Cojutepeque", "25-Jun", "8:39", "Empresa", "00:19:50", "0", "deposito manual", "00:02:13", "ue", "0:00:04", "00:00:00", "0:22:07", "9:01", "8", "1", ""],
-  ["Cojutepeque", "25-Jun", "8:41", "Empresa", "00:19:52", "0", "remesa cuenta corriente", "00:03:57", "c", "0:00:00", "00:00:00", "0:23:49", "9:04", "9", "3", ""],
-  ["Cojutepeque", "25-Jun", "8:42", "Persona Natural", "00:19:40", "0", "retiro ahorro", "00:02:15", "c", "0:00:00", "00:00:00", "0:21:55", "9:03", "10", "1", ""],
-  ["Cojutepeque", "25-Jun", "8:45", "Persona Natural", "00:22:40", "0", "retiro ahorro", "00:02:55", "c", "0:00:00", "00:00:00", "0:25:35", "9:10", "9", "3", ""],
-  ["Cojutepeque", "25-Jun", "8:48", "Persona Natural", "00:23:12", "0", "retiro ahorro", "00:02:57", "c", "0:00:00", "00:00:00", "0:26:09", "9:14", "8", "3", ""],
-  ["Cojutepeque", "25-Jun", "8:52", "Persona Natural", "00:22:16", "0", "remesa familiar", "00:02:13", "c", "0:00:00", "00:00:00", "0:24:42", "9:16", "9", "3", ""],
-  ["Cojutepeque", "25-Jun", "8:55", "Persona Natural", "00:21:10", "0", "abono tc", "00:02:53", "c", "0:00:00", "00:00:00", "0:24:23", "9:19", "7", "3", ""],
-  //["", "", "", "", "", "", "", "", "", "", ""],
-  ["Cojutepeque", "25-Jun", "8:58", "Persona Natural", "00:22:26", "0", "remesa familiar", "00:01:52", "c", "0:00:00", "00:00:00", "0:24:08", "9:22", "5", "3", ""]
+var selectOptions = [
+  { value: "0", label: "Aguilares" },
+  { value: "1", label: "Ahuachapan" },
+  { value: "2", label: "Cojutepeque" }
+];
+
+const dataSucursal = [
+  { name: 'Aguilares', dataTable: [
+                        ["Aguilares", "25-Jun", "8:35", "Persona Natural", "00:16:18", "0", "colecturia en linea", "00:05:56", "c", "0:00:00", "00:00:00", "0:22:14", "8:57", "5", "6", "Pago cheque"],
+                        ["Aguilares", "25-Jun", "8:16", "Persona Natural", "00:16:36", "0", "retiro ahorro ", "00:02:13", "c", "0:00:00", "00:00:00", "0:18:49", "8:34", "6", "4", ""],
+                        ["Aguilares", "25-Jun", "8:37", "Persona Natural", "00:20:04", "0", "retiro ahorro", "00:02:17", "c", "0:00:00", "00:00:00", "0:22:21", "8:59", "7", "4", ""],
+                        ["Aguilares", "25-Jun", "8:39", "Empresa", "00:19:50", "0", "deposito manual", "00:02:13", "ue", "0:00:04", "00:00:00", "0:22:07", "9:01", "8", "1", ""],
+                        ["Aguilares", "25-Jun", "8:41", "Empresa", "00:19:52", "0", "remesa cuenta corriente", "00:03:57", "c", "0:00:00", "00:00:00", "0:23:49", "9:04", "9", "3", ""],
+                        ["Aguilares", "25-Jun", "8:42", "Persona Natural", "00:19:40", "0", "retiro ahorro", "00:02:15", "c", "0:00:00", "00:00:00", "0:21:55", "9:03", "10", "1", ""],
+                        ["Aguilares", "25-Jun", "8:45", "Persona Natural", "00:22:40", "0", "retiro ahorro", "00:02:55", "c", "0:00:00", "00:00:00", "0:25:35", "9:10", "9", "3", ""],
+                        ["Aguilares", "25-Jun", "8:48", "Persona Natural", "00:23:12", "0", "retiro ahorro", "00:02:57", "c", "0:00:00", "00:00:00", "0:26:09", "9:14", "8", "3", ""],
+                        ["Aguilares", "25-Jun", "8:52", "Persona Natural", "00:22:16", "0", "remesa familiar", "00:02:13", "c", "0:00:00", "00:00:00", "0:24:42", "9:16", "9", "3", ""],
+                        ["Aguilares", "25-Jun", "8:55", "Persona Natural", "00:21:10", "0", "abono tc", "00:02:53", "c", "0:00:00", "00:00:00", "0:24:23", "9:19", "7", "3", ""],
+                        //["", "", "", "", "", "", "", "", "", "", ""],
+                        ["Aguilares", "25-Jun", "8:58", "Persona Natural", "00:22:26", "0", "remesa familiar", "00:01:52", "c", "0:00:00", "00:00:00", "0:24:08", "9:22", "5", "3", ""]
+                      ], dataTableSummary: [
+                        ["CAJAS", "00:25:00", "00:19:00", "00:00:00", "00:19:20"],
+                        ["", "00:00:01", "00:00:03", "00:00:00", "00:00:02"],
+                        ["", "00:03:02", "00:04:46", "00:00:00", "00:06:47"],
+                        ["PLATAFORMA", "00:12:40", "00:48:10", "-", "00:48:10"],
+                        ["", "00:00:00", "00:15:20", "-", "00:15:20"],
+                        ["", "00:02:17", "00:24:54", "-", "00:28:10"]
+                      ], dataTablePlatMeasure: [
+                        ["Aguilares", "25-Jun", "9:30", "Persona Natural", "0:00:00", "0", "Actualizacion de datos", "0:15:21", "0:00:00", "0:15:21", "9:45", "", "2", ""],
+                        ["Aguilares", "25-Jun", "9:40", "Persona Natural", "0:00:00", "0", "Tarjeta de debito", "0:18:40", "0:00:00", "0:18:40", "9:58", "", "2", "Reposicion de tarjeta"],
+                        ["Aguilares", "25-Jun", "10:05", "Persona Natural", "0:00:00", "0", "Actualizacion de datos", "0:20:19", "0:00:00", "0:20:19", "10:25", "", "1", "CDE"],
+                        ["Aguilares", "25-Jun", "11:03", "Persona Natural", "0:00:00", "0", "Apertura de cuenta", "0:30:20", "0:00:00", "0:30:20", "11:33", "", "2", "Seguro de vida"]
+                      ], dataLineChart1: [28, 15, 28, 20, 15, 20, 28, 24, 10, 2, 15],
+                      dataLineChart2: [3, 0, 1, 8, 0, 1, 7, 2, 0, 0, 0],
+                      dataBarChart: [28, 15, 28, 20, 15, 20, 28, 24, 10, 2, 15]},
+  { name: 'Ahuachapan', dataTable: [
+                        ["Ahuachapan", "25-Jun", "8:35", "Persona Natural", "00:16:18", "0", "colecturia en linea", "00:05:56", "c", "0:00:00", "00:00:00", "0:22:14", "8:57", "5", "6", "Pago cheque"],
+                        ["Ahuachapan", "25-Jun", "8:16", "Persona Natural", "00:16:36", "0", "retiro ahorro ", "00:02:13", "c", "0:00:00", "00:00:00", "0:18:49", "8:34", "6", "4", ""],
+                        ["Ahuachapan", "25-Jun", "8:37", "Persona Natural", "00:20:04", "0", "retiro ahorro", "00:02:17", "c", "0:00:00", "00:00:00", "0:22:21", "8:59", "7", "4", ""],
+                        ["Ahuachapan", "25-Jun", "8:39", "Empresa", "00:19:50", "0", "deposito manual", "00:02:13", "ue", "0:00:04", "00:00:00", "0:22:07", "9:01", "8", "1", ""],
+                        ["Ahuachapan", "25-Jun", "8:41", "Empresa", "00:19:52", "0", "remesa cuenta corriente", "00:03:57", "c", "0:00:00", "00:00:00", "0:23:49", "9:04", "9", "3", ""],
+                        ["Ahuachapan", "25-Jun", "8:42", "Persona Natural", "00:19:40", "0", "retiro ahorro", "00:02:15", "c", "0:00:00", "00:00:00", "0:21:55", "9:03", "10", "1", ""],
+                        ["Ahuachapan", "25-Jun", "8:45", "Persona Natural", "00:22:40", "0", "retiro ahorro", "00:02:55", "c", "0:00:00", "00:00:00", "0:25:35", "9:10", "9", "3", ""],
+                        ["Ahuachapan", "25-Jun", "8:48", "Persona Natural", "00:23:12", "0", "retiro ahorro", "00:02:57", "c", "0:00:00", "00:00:00", "0:26:09", "9:14", "8", "3", ""],
+                        ["Ahuachapan", "25-Jun", "8:52", "Persona Natural", "00:22:16", "0", "remesa familiar", "00:02:13", "c", "0:00:00", "00:00:00", "0:24:42", "9:16", "9", "3", ""],
+                        ["Ahuachapan", "25-Jun", "8:55", "Persona Natural", "00:21:10", "0", "abono tc", "00:02:53", "c", "0:00:00", "00:00:00", "0:24:23", "9:19", "7", "3", ""],
+                        //["", "", "", "", "", "", "", "", "", "", ""],
+                        ["Ahuachapan", "25-Jun", "8:58", "Persona Natural", "00:22:26", "0", "remesa familiar", "00:01:52", "c", "0:00:00", "00:00:00", "0:24:08", "9:22", "5", "3", ""]
+                      ], dataTableSummary: [
+                        ["CAJAS", "00:15:00", "00:19:00", "00:00:00", "00:19:20"],
+                        ["", "00:00:00", "00:00:03", "00:00:00", "00:00:02"],
+                        ["", "00:02:02", "00:04:46", "00:00:00", "00:06:47"],
+                        ["PLATAFORMA", "00:12:40", "00:48:10", "-", "00:48:10"],
+                        ["", "00:00:00", "00:15:20", "-", "00:15:20"],
+                        ["", "00:03:17", "00:24:54", "-", "00:28:10"]
+                      ], dataTablePlatMeasure: [
+                        ["Ahuachapan", "25-Jun", "9:30", "Persona Natural", "0:00:00", "0", "Actualizacion de datos", "0:15:21", "0:00:00", "0:15:21", "9:45", "", "2", ""],
+                        ["Ahuachapan", "25-Jun", "9:40", "Persona Natural", "0:00:00", "0", "Tarjeta de debito", "0:18:40", "0:00:00", "0:18:40", "9:58", "", "2", "Reposicion de tarjeta"],
+                        ["Ahuachapan", "25-Jun", "10:05", "Persona Natural", "0:00:00", "0", "Actualizacion de datos", "0:20:19", "0:00:00", "0:20:19", "10:25", "", "1", "CDE"],
+                        ["Ahuachapan", "25-Jun", "11:03", "Persona Natural", "0:00:00", "0", "Apertura de cuenta", "0:30:20", "0:00:00", "0:30:20", "11:33", "", "2", "Seguro de vida"]
+                      ], dataLineChart1: [28, 15, 28, 20, 15, 20, 28, 24, 10, 2, 15],
+                      dataLineChart2: [3, 0, 1, 8, 0, 1, 7, 2, 0, 0, 0],
+                      dataBarChart: [28, 15, 28, 20, 15, 20, 28, 24, 10, 2, 15]},
+  { name: 'Cojutepeque', dataTable: [
+                        ["Cojutepeque", "25-Jun", "8:35", "Persona Natural", "00:16:18", "0", "colecturia en linea", "00:05:56", "c", "0:00:00", "00:00:00", "0:22:14", "8:57", "5", "6", "Pago cheque"],
+                        ["Cojutepeque", "25-Jun", "8:16", "Persona Natural", "00:16:36", "0", "retiro ahorro ", "00:02:13", "c", "0:00:00", "00:00:00", "0:18:49", "8:34", "6", "4", ""],
+                        ["Cojutepeque", "25-Jun", "8:37", "Persona Natural", "00:20:04", "0", "retiro ahorro", "00:02:17", "c", "0:00:00", "00:00:00", "0:22:21", "8:59", "7", "4", ""],
+                        ["Cojutepeque", "25-Jun", "8:39", "Empresa", "00:19:50", "0", "deposito manual", "00:02:13", "ue", "0:00:04", "00:00:00", "0:22:07", "9:01", "8", "1", ""],
+                        ["Cojutepeque", "25-Jun", "8:41", "Empresa", "00:19:52", "0", "remesa cuenta corriente", "00:03:57", "c", "0:00:00", "00:00:00", "0:23:49", "9:04", "9", "3", ""],
+                        ["Cojutepeque", "25-Jun", "8:42", "Persona Natural", "00:19:40", "0", "retiro ahorro", "00:02:15", "c", "0:00:00", "00:00:00", "0:21:55", "9:03", "10", "1", ""],
+                        ["Cojutepeque", "25-Jun", "8:45", "Persona Natural", "00:22:40", "0", "retiro ahorro", "00:02:55", "c", "0:00:00", "00:00:00", "0:25:35", "9:10", "9", "3", ""],
+                        ["Cojutepeque", "25-Jun", "8:48", "Persona Natural", "00:23:12", "0", "retiro ahorro", "00:02:57", "c", "0:00:00", "00:00:00", "0:26:09", "9:14", "8", "3", ""],
+                        ["Cojutepeque", "25-Jun", "8:52", "Persona Natural", "00:22:16", "0", "remesa familiar", "00:02:13", "c", "0:00:00", "00:00:00", "0:24:42", "9:16", "9", "3", ""],
+                        ["Cojutepeque", "25-Jun", "8:55", "Persona Natural", "00:21:10", "0", "abono tc", "00:02:53", "c", "0:00:00", "00:00:00", "0:24:23", "9:19", "7", "3", ""],
+                        //["", "", "", "", "", "", "", "", "", "", ""],
+                        ["Cojutepeque", "25-Jun", "8:58", "Persona Natural", "00:22:26", "0", "remesa familiar", "00:01:52", "c", "0:00:00", "00:00:00", "0:24:08", "9:22", "5", "3", ""]
+                      ], dataTableSummary: [
+                        ["CAJAS", "00:15:00", "00:19:00", "00:00:00", "00:19:20"],
+                        ["", "00:00:00", "00:00:03", "00:00:00", "00:00:02"],
+                        ["", "00:02:02", "00:04:46", "00:00:00", "00:06:47"],
+                        ["PLATAFORMA", "00:12:40", "00:48:10", "-", "00:48:10"],
+                        ["", "00:00:00", "00:15:20", "-", "00:15:20"],
+                        ["", "00:03:17", "00:24:54", "-", "00:28:10"]
+                      ], dataTablePlatMeasure: [
+                        ["Cojutepeque", "25-Jun", "9:30", "Persona Natural", "0:00:00", "0", "Actualizacion de datos", "0:15:21", "0:00:00", "0:15:21", "9:45", "", "2", ""],
+                        ["Cojutepeque", "25-Jun", "9:40", "Persona Natural", "0:00:00", "0", "Tarjeta de debito", "0:18:40", "0:00:00", "0:18:40", "9:58", "", "2", "Reposicion de tarjeta"],
+                        ["Cojutepeque", "25-Jun", "10:05", "Persona Natural", "0:00:00", "0", "Actualizacion de datos", "0:20:19", "0:00:00", "0:20:19", "10:25", "", "1", "CDE"],
+                        ["Cojutepeque", "25-Jun", "11:03", "Persona Natural", "0:00:00", "0", "Apertura de cuenta", "0:30:20", "0:00:00", "0:30:20", "11:33", "", "2", "Seguro de vida"]
+                      ], dataLineChart1: [28, 15, 28, 20, 15, 20, 28, 24, 10, 2, 15],
+                      dataLineChart2: [3, 0, 1, 8, 0, 1, 7, 2, 0, 0, 0],
+                      dataBarChart: [28, 15, 28, 20, 15, 20, 28, 24, 10, 2, 15]}
 ];
 
 const dataTableSummary = [
@@ -35,19 +115,17 @@ const dataTableSummary = [
   ["", "00:03:17", "00:24:54", "-", "00:28:10"]
 ];
 
-const dataTablePlatMeasure = [
-  ["Cojutepeque", "25-Jun", "9:30", "Persona Natural", "0:00:00", "0", "Actualizacion de datos", "0:15:21", "0:00:00", "0:15:21", "9:45", "", "2", ""],
-  ["Cojutepeque", "25-Jun", "9:40", "Persona Natural", "0:00:00", "0", "Tarjeta de debito", "0:18:40", "0:00:00", "0:18:40", "9:58", "", "2", "Reposicion de tarjeta"],
-  ["Cojutepeque", "25-Jun", "10:05", "Persona Natural", "0:00:00", "0", "Actualizacion de datos", "0:20:19", "0:00:00", "0:20:19", "10:25", "", "1", "CDE"],
-  ["Cojutepeque", "25-Jun", "11:03", "Persona Natural", "0:00:00", "0", "Apertura de cuenta", "0:30:20", "0:00:00", "0:30:20", "11:33", "", "2", "Seguro de vida"]
-];
-
-
 class Secundario extends Component {
   constructor(props) {
     super(props);
+
+    this.changePlaceInformation = this.changePlaceInformation.bind(this);
     this.state = {
-      data: dataTable.map((prop, key) => {
+      value: 2,
+      id_sucursal: 0,
+      nombre_sucursal: dataSucursal[2].name,
+      chartsPrincipal3: chartsPrincipal3,
+      data: dataSucursal[2].dataTable.map((prop, key) => {
         return {
           id: key,
           sucursal: prop[0],
@@ -68,7 +146,7 @@ class Secundario extends Component {
           observacion: prop[15]
         };
       }),
-      dataSummary: dataTablePlatMeasure.map((prop, key) => {
+      dataSummary: dataSucursal[2].dataTablePlatMeasure.map((prop, key) => {
         return {
           id: key,
           sucursal: prop[0],
@@ -86,23 +164,122 @@ class Secundario extends Component {
           esc_atend: prop[12],
           observacion: prop[13]
         };
-      })
+      }),
+      dataTableSummary: dataSucursal[2].dataTableSummary
     };
+    this.changePlaceInformation = this.changePlaceInformation.bind(this);
   }
+  componentWillUnmount() {
+    this.changePlaceInformation();
+  }
+
+  changePlaceInformation = (event) => {
+    console.log(event.value);
+    this.setState({
+      nombre_sucursal: dataSucursal[event.value].name,
+      data: dataSucursal[event.value].dataTable.map((prop, key) => {
+        return {
+          id: key,
+          sucursal: prop[0],
+          fecha: prop[1],
+          hora_arribo: prop[2],
+          tipo_cliente: prop[3],
+          total_cola: prop[4],
+          cliente_fugado: prop[5],
+          operacion: prop[6],
+          tiempo_tot_tran: prop[7],
+          cl_n_e: prop[8],
+          tiempo_reg_us: prop[9],
+          tiempo_ent_doc: prop[10],
+          tiempo_ciclo: prop[11],
+          hora_salida: prop[12],
+          cant_cl_cola: prop[13],
+          caja_atend: prop[14],
+          observacion: prop[15]
+        };
+      }),
+      dataSummary: dataSucursal[event.value].dataTablePlatMeasure.map((prop, key) => {
+        return {
+          id: key,
+          sucursal: prop[0],
+          fecha: prop[1],
+          hora_arribo: prop[2],
+          tipo_cliente: prop[3],
+          t_tot_cola: prop[4],
+          cl_fugado: prop[5],
+          operacion: prop[6],
+          t_tot_trans: prop[7],
+          t_ent_doc: prop[8],
+          t_ciclo: prop[9],
+          hora_salida: prop[10],
+          cant_cl_cola: prop[11],
+          esc_atend: prop[12],
+          observacion: prop[13]
+        };
+      }),
+      dataTableSummary: dataSucursal[event.value].dataTableSummary
+    });
+  }
+
   render() {
     return (
       <div className="content">
+      <Navbar
+        color={"transparent"}
+        expand="lg"
+        className={"navbar-absolute navbar-transparent "}>
+        <Container fluid>
+
+        </Container>
+      </Navbar>
         <PanelHeader
           content={
             <div className="header text-center">
               <h2 className="title">ANALISIS DE TIEMPOS SUCURSAL</h2>
               <p className="category">
-                Cojutepeque
+                {this.state.nombre_sucursal}
               </p>
             </div>
           }
         />
         <div className="content">
+          <Row className="justify-content-center">
+          <Col xs={12} md={3}>
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h4">Filtro Sucursal</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <FormGroup>
+                  <Select
+                  className="react-select primary"
+                  classNamePrefix="react-select"
+                  placeholder="Seleccionar"
+                  name="singleSelect"
+                  value={this.state.value}
+                  options={selectOptions}
+                  onChange={this.changePlaceInformation.bind(this)}
+                  />
+                </FormGroup>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col xs={12} md={3}>
+            <Card>
+              <CardHeader>
+                <CardTitle tag="h4">Filtro Fecha</CardTitle>
+              </CardHeader>
+              <CardBody>
+                <FormGroup>
+                  <Datetime
+                    timeFormat={false}
+                    inputProps={{ placeholder: "Datetime Picker Here" }}
+                  />
+                </FormGroup>
+              </CardBody>
+            </Card>
+          </Col>
+          </Row>
           <Row>
           <Col xs={12} md={6} className="ml-auto">
             <Card className="card-chart">
@@ -120,7 +297,7 @@ class Secundario extends Component {
                     <th>Ciclo</th>
                   </thead>
                   <tbody>
-                    {dataTableSummary.map((prop, key) => {
+                    {this.state.dataTableSummary.map((prop, key) => {
                       if (key===0 || key === 3)
                         return [
                           <tr>
@@ -154,11 +331,11 @@ class Secundario extends Component {
               <Card className="card-chart">
                 <CardHeader>
                   <CardCategory>Grafico Resumen</CardCategory>
-                  <CardTitle tag="h4">Ahuachapan</CardTitle>
+                  <CardTitle tag="h4">{this.state.nombre_sucursal}</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <div >
-                    <Bar data={chartsPrincipal3.data} options={chartsPrincipal3.options} plugins={chartsPrincipal3.plugins}/>
+                    <Bar data={this.state.chartsPrincipal3.data} options={this.state.chartsPrincipal3.options} plugins={this.state.chartsPrincipal3.plugins}/>
                   </div>
                 </CardBody>
                 <CardFooter>

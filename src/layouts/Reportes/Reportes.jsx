@@ -36,7 +36,6 @@ class Principal extends React.Component {
       <div className="wrapper">
         <Sidebar {...this.props} routes={repRoutes} />
         <div className="main-panel" ref="mainPanel">
-          <Header {...this.props} />
           <Switch>
             {repRoutes.map((prop, key) => {
               if (prop.collapse) {
